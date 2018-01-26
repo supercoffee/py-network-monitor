@@ -1,0 +1,23 @@
+{
+  "bytes_sent": 13877248,
+  "download": 251492607.28454146,
+  "timestamp": "2018-01-26T04:38:25.004224Z",
+  "share": null,
+  "bytes_received": 314841171,
+  "ping": 13.339,
+  "upload": 10969948.34102539,
+  "server": {
+    "latency": 13.339,
+    "name": "Seattle, WA",
+    "url": "http://stosat-rvlt-01.sys.comcast.net/speedtest/upload.php",
+    "country": "United States",
+    "lon": "-122.3321",
+    "cc": "US",
+    "host": "stosat-rvlt-01.sys.comcast.net:8080",
+    "sponsor": "Comcast",
+    "url2": "http://a-stosat-rvlt-01.sys.comcast.net/speedtest/upload.php",
+    "lat": "47.6062",
+    "id": "1782",
+    "d": 3.22577668206853
+  }
+}
