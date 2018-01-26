@@ -6,6 +6,8 @@ import subprocess
 def run_test():
     # run speed test command
     cmd_output = subprocess.run(['speedtest-cli', '--json'], stdout=subprocess.PIPE)
+    results = json.loads(cmd_output.stdout)
+    import_results(results)
 
 
 def import_from_file(f):
