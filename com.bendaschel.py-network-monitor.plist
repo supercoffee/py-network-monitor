@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+        "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+
+        <key>Label</key>
+        <string>com.bendaschel.py-network-monitor</string>
+
+        <key>Program</key>
+        <string>{{ python_path }}</string>
+
+        <key>WorkingDirectory</key>
+        <string>{{ install_dir }}</string>
+
+        <key>ProgramArguments</key>
+        <array>
+            <string>{{ python_path }}</string>
+            <string>run-speed-test.py</string>
+            <string>run</string>
+        </array>
+
+
+
+        <key>RunAtLoad</key>
+        <true/>
+
+        <key>StartInterval</key>
+        <integer>300</integer>
+
+        <key>StandardOutPath</key>
+        <string>{{ install_dir }}/run-speed-test.log</string>
+
+        <key>StandardErrorPath</key>
+        <string>{{ install_dir }}/run-speed-test.error.log</string>
+
+        <key>EnvironmentVariables</key>
+        <dict>
+            <key>PATH</key>
+            <string>{{ env_path }}</string>
+        </dict>
+
+    </dict>
+</plist>
