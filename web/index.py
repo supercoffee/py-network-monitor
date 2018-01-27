@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import jsonify
-from speedtest import speedtest
+from speedtestdaemon import speedtest
 from flask import render_template
 
 app = Flask(__name__)
