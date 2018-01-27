@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body>
+
+<b>Dashboard</b>
+
+<canvas id="myCanvas" width="640" height="480"></canvas>
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+<script>
+
+$(document).ready(refresh);
+
+
+function refresh() {
+    $.ajax('/speedtests')
+        .done(draw_results)
+}
+
+function draw_results(data) {
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+
+    var downloads = data.map(testResult => testResult['download'] / (1024 * 1024));
+    var labels = data.map(testResult => testResult['timestamp']);
+
+    var speedChart = new Chart(context, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Download speed',
+                    backgroundColor: 'rgb(255, 0, 0)',
+                    data: downloads
+                }
+            ]
+        }
+    })
+
+
+}
+</script>
+</body>
+</html>
