@@ -1,13 +1,18 @@
 import argparse
 import json
 import sqlite3
-import subprocess
+
+import speedtest
+
 
 def run_test():
-    # run speed test command
-    cmd_output = subprocess.run(['speedtest-cli', '--json'], stdout=subprocess.PIPE)
-    results = json.loads(cmd_output.stdout)
-    import_results(results)
+    servers = []
+    s = speedtest.Speedtest()
+    s.get_servers(servers)
+    s.get_best_server()
+    s.download()
+    s.upload()
+    import_results(s.results.dict())
 
 
 def import_from_file(f):
@@ -16,7 +21,6 @@ def import_from_file(f):
 
 
 def import_results(results_dict):
-
     server = results_dict['server']
     del results_dict['server']
     del results_dict['share']
@@ -24,12 +28,14 @@ def import_results(results_dict):
     results_dict['server'] = server['id']
 
     conn = sqlite3.connect('speed-test-results.db')
-    conn.execute("""INSERT INTO servers VALUES (:id, :latency, :name, :url, :country, :lon, :lat, :cc, :host, :sponsor, :url2, :d)""", server)
+    conn.execute(
+        """INSERT INTO servers VALUES (:id, :latency, :name, :url, :country, :lon, :lat, :cc, :host, :sponsor, :url2, :d)""",
+        server)
     conn.execute("""INSERT INTO test_results  (bytes_sent, download, timestamp, bytes_received, ping, upload, server)
-                    VALUES (:bytes_sent, :download, :timestamp, :bytes_received, :ping, :upload, :server)""", results_dict)
+                    VALUES (:bytes_sent, :download, :timestamp, :bytes_received, :ping, :upload, :server)""",
+                 results_dict)
     conn.commit()
     conn.close()
-
 
 
 def prepare_db():
@@ -47,22 +53,23 @@ def prepare_db():
     conn.commit()
     conn.close()
 
+
 def dict_factory(cursor, row):
     d = {}
     for idx, col in enumerate(cursor.description):
         d[col[0]] = row[idx]
     return d
 
+
 def get_all_speedtest_results():
     conn = sqlite3.connect('speed-test-results.db')
     conn.row_factory = dict_factory
     cursor = conn.cursor()
-    cursor.execute("""SELECT * from test_results""")
+    cursor.execute("""SELECT * FROM test_results""")
     results = [dict(r) for r in cursor]
     cursor.close()
     conn.close()
     return results
-
 
 
 def run():
@@ -77,7 +84,6 @@ def run():
         run_test()
     elif args.action == 'import':
         import_from_file(args.file)
-
 
 
 if __name__ == '__main__':

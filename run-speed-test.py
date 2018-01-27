@@ -1,2 +1,2 @@
-from speedtest import speedtest
+from speedtestdaemon import speedtest
 speedtest.run()
