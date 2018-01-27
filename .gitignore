@@ -1,2 +1,5 @@
 .idea
 speed-test-results.db
+env
+*.pyc
+*.log
