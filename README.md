@@ -7,6 +7,7 @@ This script runs in the background of your mac and tests the speed of your inter
 ## Requirements
 * [speedtest-cli](https://github.com/sivel/speedtest-cli)
 * python3
+* Flask (for web UI)
 
 ## Installing
 
@@ -17,11 +18,14 @@ sudo install.sh
 ````
 
 ## Viewing data
-Data is stored in the `speed-test-results.db` sqlite database located inside the program installation directory.
-Use your favorite sqlite3 interface to view the data.
+* start the webserver from this project directory `./server.sh`
+* Open a browser and navigate to `localhost:5000`
 
 ### Project Todos
 * Customizable installation directory
 * custom data and log directories
+    * load data from config file
 * uninstaller
-* web GUI
+* Linux support
+* Run webserver as a daemon
+* consolidate dependencies into a python virtual env
