@@ -27,7 +27,21 @@ function draw_results(data) {
     var context = canvas.getContext('2d');
 
     var downloads = data.map(testResult => testResult['download'] / (1024 * 1024));
-    var labels = data.map(testResult => testResult['timestamp']);
+    var uploads = data.map(testResult => testResult['upload'] / (1024 * 1024));
+
+    let format = {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+
+    };
+    var labels = data.map(function(testResult) {
+        let timestamp = testResult['timestamp'];
+        let date = new Date(timestamp);
+        return date.toLocaleString('en-US')
+    });
 
     var speedChart = new Chart(context, {
         type: 'bar',
@@ -38,9 +52,15 @@ function draw_results(data) {
                     label: 'Download speed',
                     backgroundColor: 'rgb(255, 0, 0)',
                     data: downloads
+                },
+                {
+                    label: 'Upload speed',
+                    backgroundColor: 'rgb(0, 0, 255)',
+                    data: uploads
                 }
             ]
         }
+
     })
 
 
