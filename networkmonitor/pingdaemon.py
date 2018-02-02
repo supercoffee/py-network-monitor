@@ -35,6 +35,16 @@ class PingPlugin(Plugin):
 def insert_result(db: Connection, results: PingResult):
     print(results)
 
+    insert = {'timestamp': str(datetime.now())}
+    insert.update(results._asdict())
+
+    db.execute("""
+        INSERT INTO ping_results (destination, packet_transmit, packet_receive, packet_loss_rate,
+        packet_loss_count, rtt_min, rtt_avg, rtt_max, rtt_mdev, packet_duplicate_rate, packet_duplicate_count, timestamp)
+         VALUES (:destination, :packet_transmit, :packet_receive, :packet_loss_rate,
+          :packet_loss_count, :rtt_min, :rtt_avg, :rtt_max, :rtt_mdev, :packet_duplicate_rate,
+           :packet_duplicate_count, :timestamp)
+    """, insert)
 
 if __name__ == '__main__':
     app = Application()
