@@ -1,10 +1,8 @@
-import sys
-sys.path.append('framework')
 import pingparsing
-from framework import Application, Plugin
+from .framework import Application, Plugin
 from sqlite3 import Connection
 from pingparsing import PingResult
-
+from datetime import datetime
 
 class PingPlugin(Plugin):
 
@@ -15,7 +13,7 @@ class PingPlugin(Plugin):
         db.execute("""
             CREATE TABLE IF NOT EXISTS ping_results (id INTEGER PRIMARY KEY, destination TEXT, packet_transmit INTEGER,
               packet_receive INTEGER, packet_loss_rate REAL, packet_loss_count INTEGER, rtt_min REAL, rtt_avg REAL,
-              rtt_max REAL, packet_duplicate_rate REAL,packet_duplicate_count INTEGER, timestamp DATETIME)
+              rtt_max REAL, rtt_mdev REAL, packet_duplicate_rate REAL,packet_duplicate_count INTEGER, timestamp DATETIME)
         """)
 
     def run(self, app: Application):
@@ -36,9 +34,7 @@ class PingPlugin(Plugin):
 
 def insert_result(db: Connection, results: PingResult):
     print(results)
-    # db.execute("""
-    #     INSERT INTO ping_results
-    # """)
+
 
 if __name__ == '__main__':
     app = Application()

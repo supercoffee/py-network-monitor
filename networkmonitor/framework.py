@@ -1,6 +1,28 @@
 import sqlite3
 
 
+class Plugin(object):
+
+    @property
+    def name(self):
+        return self.__name__
+
+    def prepare_db(self, connection):
+        """
+        Create database tables for this plugin
+        :param connection:
+        :return:
+        """
+        pass
+
+    def run(self, app):
+        """
+        Run the main command and do something useful with the output
+        :param app:
+        :return:
+        """
+        pass
+
 class Application(object):
 
     def __init__(self):
@@ -29,24 +51,3 @@ class Application(object):
         conn.commit()
         conn.close()
 
-
-class Plugin(object):
-    @property
-    def name(self):
-        return self.__name__
-
-    def prepare_db(self, connection):
-        """
-        Create database tables for this plugin
-        :param connection:
-        :return:
-        """
-        pass
-
-    def run(self, app):
-        """
-        Run the main command and do something useful with the output
-        :param app:
-        :return:
-        """
-        pass
