@@ -29,3 +29,14 @@ sudo install.sh
 * Linux support
 * Run webserver as a daemon
 * consolidate dependencies into a python virtual env
+
+
+__Ping module__
+Send pings and log results
+
+table structure:
+
+- id: int
+- server_ip: string
+- rtt: int
+- timestamp: datetime
